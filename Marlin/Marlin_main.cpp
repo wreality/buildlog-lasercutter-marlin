@@ -878,8 +878,6 @@ void process_commands()
         #ifdef LASER_FIRE_G1
           if (code_seen('S') && !IsStopped()) {
     	    laser.intensity = (float) code_value();
-	      } else {
-		    laser.intensity = 100.0;
 	      }
           if (code_seen('L') && !IsStopped()) { laser.duration = (unsigned long)labs(code_value()); laser.mode = PULSED; }
           if (code_seen('P') && !IsStopped()) { laser.ppm = (float) code_value(); laser.mode = PULSED; }
@@ -1207,8 +1205,6 @@ void process_commands()
     case 3:  //M3 - fire laser
       if (code_seen('S') && !IsStopped()) {
     	laser.intensity = (float) code_value();
-	  } else {
-		laser.intensity = 100.0;
 	  }
       if (code_seen('L') && !IsStopped()) { laser.duration = (unsigned long)labs(code_value()); laser.mode = PULSED; }
       if (code_seen('P') && !IsStopped()) { laser.ppm = (float) code_value(); laser.mode = PULSED; }
@@ -1219,6 +1215,7 @@ void process_commands()
 
       break;
     case 5:  //M5 stop firing laser
+      laser.intensity = 0;
 	  laser.status = LASER_OFF;
       break;
 #endif // LASER_FIRE_SPINDLE
